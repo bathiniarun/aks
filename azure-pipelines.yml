@@ -124,7 +124,7 @@ stages:
     displayName: Deploy to Production
     pool:
       name: $(vmImageName)
-    environment: 'nikhithabyreddyaks.production'
+    environment: 'nikhithabyreddyaks.myspace'
     strategy:
       runOnce:
         deploy:
