@@ -1,7 +1,3 @@
-# Deploy to Azure Kubernetes Service
-# Build and push image to Azure Container Registry; Deploy to Azure Kubernetes Service
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
 - develop
 
@@ -9,7 +5,6 @@ resources:
 - repo: self
 
 variables:
-
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '645416f5-a96c-4566-9d59-330a40183ec9'
   imageRepository: 'nikhithabyreddyaks'
@@ -17,7 +12,7 @@ variables:
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
   imagePullSecret: 'clusters1098533e-auth'
-
+  
   # Agent VM image name
   vmImageName: 'self'
 
@@ -34,7 +29,7 @@ stages:
       name: $(vmImageName)
     steps:
     - task: Docker@2
-      displayName: Build and push an image to container registry
+      displayName: Build and push an image to the container registry
       inputs:
         command: buildAndPush
         repository: $(imageRepository)
@@ -49,7 +44,6 @@ stages:
 - stage: Deploy
   displayName: Deploy stage
   dependsOn: Build
-
   jobs:
   - deployment: Deploy
     condition: and(succeeded(), not(startsWith(variables['Build.SourceBranch'], 'refs/pull/')))
@@ -85,7 +79,7 @@ stages:
     condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/pull/'))
     pool:
       name: $(vmImageName)
-
+      
     environment: 'nikhithabyreddyaks.$(k8sNamespaceForPR)'
     strategy:
       runOnce:
@@ -120,24 +114,36 @@ stages:
                 $(imagePullSecret)
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
-                - stage: Deploy
+
+- stage: Prod
   displayName: Prod stage
   dependsOn: Deploy
-
   jobs:
-  - deployment: Deploy
+  - deployment: DeployProd
     condition: and(succeeded(), not(startsWith(variables['Build.SourceBranch'], 'refs/pull/')))
-    displayName: prod
+    displayName: Deploy to Production
     pool:
       name: $(vmImageName)
-    environment: 'nikhithabyreddyaks.myspace'
+    environment: 'nikhithabyreddyaks.production'
     strategy:
       runOnce:
         deploy:
           steps:
           - task: KubernetesManifest@0
-            displayName: Create imagePullSecret
+            displayName: Create imagePullSecret for Production
             inputs:
               action: createSecret
               secretName: $(imagePullSecret)
               dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+
+          - task: KubernetesManifest@0
+            displayName: Deploy to Kubernetes cluster (Production)
+            inputs:
+              action: deploy
+              manifests: |
+                $(Pipeline.Workspace)/manifests/deployment-prod.yml
+                $(Pipeline.Workspace)/manifests/service-prod.yml
+              imagePullSecrets: |
+                $(imagePullSecret)
+              containers: |
+                $(containerRegistry)/$(imageRepository):$(tag)
