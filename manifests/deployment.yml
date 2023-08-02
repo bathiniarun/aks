@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: bathiniarundotnetarun 
-          image: clusters.azurecr.io/nikithaazuredeploy:latest
+          image: clusters.azurecr.io/nikhithabyreddyaks:latest
           ports:
           - containerPort: 8080
