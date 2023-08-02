@@ -44,8 +44,8 @@ stages:
     - upload: manifests
       artifact: manifests
 
-- stage: Deploy
-  displayName: Deploy to Test
+- stage: DeployToTest
+  displayName: Deploy Test
   dependsOn: Build
 
   jobs:
@@ -53,7 +53,7 @@ stages:
     displayName: Deploy to Test
     pool:
       vmImage: $(vmImageName)
-    environment: 'Test.speed'
+    environment: 'Test'
     strategy:
       runOnce:
         deploy:
@@ -77,12 +77,16 @@ stages:
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
 
-jobs:
+- stage: DeploytoProd
+  displayName: Deploy Prod
+  dependsOn: DeployToTest
+
+  jobs:
   - deployment: Deploy
     displayName: Deploy to Prod
     pool:
       vmImage: $(vmImageName)
-    environment: 'Prod.speed'
+    environment: 'Prod'
     strategy:
       runOnce:
         deploy:
@@ -105,4 +109,3 @@ jobs:
                 $(imagePullSecret)
               containers: |
                 $(containerRegistry)/$(imageRepository):$(tag)
-
