@@ -24,7 +24,7 @@ variables:
 
 stages:
 - stage: Build
-  displayName: Build stage
+  displayName: Build test
   jobs:
   - job: Build
     displayName: Build
