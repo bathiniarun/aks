@@ -44,7 +44,7 @@ stages:
     - upload: manifests
       artifact: manifests
 
-- stage: Deploy
+- stage: Deploytest
   displayName: Deploy stage
   dependsOn: Build
 
@@ -54,6 +54,39 @@ stages:
     pool:
       vmImage: $(vmImageName)
     environment: 'deploytotest.jet'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: KubernetesManifest@0
+            displayName: Create imagePullSecret
+            inputs:
+              action: createSecret
+              secretName: $(imagePullSecret)
+              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+
+          - task: KubernetesManifest@0
+            displayName: Deploy to Kubernetes cluster
+            inputs:
+              action: deploy
+              manifests: |
+                $(Pipeline.Workspace)/manifests/deployment.yml
+                $(Pipeline.Workspace)/manifests/service.yml
+              imagePullSecrets: |
+                $(imagePullSecret)
+              containers: |
+                $(containerRegistry)/$(imageRepository):$(tag)
+
+- stage: Deployprod
+  displayName: Deploy prod
+  dependsOn: Deploytest
+
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: $(vmImageName)
+    environment: 'deploytoProd.jet'
     strategy:
       runOnce:
         deploy:
