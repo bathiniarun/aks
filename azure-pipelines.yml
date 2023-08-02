@@ -45,7 +45,7 @@ stages:
       artifact: manifests
 
 - stage: Deploytest
-  displayName: Deploy stage
+  displayName: Deploy test
   dependsOn: Build
 
   jobs:
@@ -86,7 +86,7 @@ stages:
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'deploytoProd.jet'
+    environment: 'deploytoProd.speed'
     strategy:
       runOnce:
         deploy:
