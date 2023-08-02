@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: bathiniarundotnetarun 
-          image: cricketipl.azurecr.io/docker:latest
+          image: cricketipl.azurecr.io/bathiniarunaks:latest
           ports:
           - containerPort: 5000
