@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-name: needforspeed
+name: madmadmad
 version: 0.1.0
 kind: Deployment
 metadata:
