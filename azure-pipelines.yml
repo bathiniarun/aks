@@ -65,50 +65,16 @@ stages:
               secretName: $(imagePullSecret)
               dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
 
-          - task: KubernetesManifest@0
-            displayName: Deploy to Kubernetes cluster
+          - task: HelmDeploy@0
             inputs:
-              action: deploy
-              manifests: |
-                $(Pipeline.Workspace)/manifests/deployment.yml
-                $(Pipeline.Workspace)/manifests/service.yml
-              imagePullSecrets: |
-                $(imagePullSecret)
-              containers: |
-                $(containerRegistry)/$(imageRepository):$(tag)
-
-- stage: Deployprod
-  displayName: Deploy prod
-  dependsOn: Deploytest
-
-  jobs:
-  - deployment: Deploy
-    displayName: Deploy
-    pool:
-      vmImage: $(vmImageName)
-    environment: 'deploytoProd.speed'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: KubernetesManifest@0
-            displayName: Create imagePullSecret
-            inputs:
-              action: createSecret
-              secretName: $(imagePullSecret)
-              dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
-
-          - task: KubernetesManifest@0
-            displayName: Deploy to Kubernetes cluster
-            inputs:
-              action: deploy
-              approvers: 'arunkumargoud147@gmail.com' # Replace with the alias of the user or group to approve the deployment.
-              comments: 'Approve the production deployment'
-              manifests: |
-                $(Pipeline.Workspace)/manifests/deployment.yml
-                $(Pipeline.Workspace)/manifests/service.yml
-              imagePullSecrets: |
-                $(imagePullSecret)
-              containers: |
-                $(containerRegistry)/$(imageRepository):$(tag)
-
+              connectionType: 'Azure Resource Manager'
+              azureSubscription: 'Subscription 2(1)(9e562a82-805c-49a3-8024-85cc8e02b0cc)'
+              azureResourceGroup: 'arun'
+              kubernetesCluster: 'needforspeed'
+              namespace: 'speed5'
+              command: 'upgrade'
+              chartType: 'FilePath'
+              chartPath: 'helm/f1/Chart.yaml'
+              chartVersion: '0.1.0'
+              releaseName: 'helm release'
+              valueFile: 'helm/f1/values.yaml'
