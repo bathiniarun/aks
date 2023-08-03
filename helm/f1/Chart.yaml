@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: jetspeed
-        image: arunbachi/b1:1
+        image: cricketipl.azurecr.io/bathiniarunaks:latest
         ports:
         - containerPort: 5000
