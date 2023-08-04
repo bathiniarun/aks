@@ -75,7 +75,7 @@ stages:
               command: 'upgrade'
               arguments: --set createCustomResources=$(CREATE_CUSTOM_RESOURCE)
               chartType: 'Filepath'
-              chartName: '$(Build.ArtifactStagingDirectory)/aks.tgz'
+              chartName: '$(Build.ArtifactStagingDirectory)'
               chartVersion: '1.0.0'
               releaseName: 'f1'
-              valueFile: '$(Build.ArtifactStagingDirectory)/aks.tgz'
+              valueFile: '$(Build.ArtifactStagingDirectory)'
