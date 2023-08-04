@@ -38,20 +38,17 @@ stages:
         tags: |
           $(tag)
 
-    - task: HelmDeploy@0
-      inputs:
-      connectionType: 'Kubernetes Service Connection'
-      kubernetesServiceConnection: 'deploytoProd-needforspeed-speed-1691007302288'
-      namespace: 'speed'
-      command: 'init'
 - task: HelmDeploy@0
   inputs:
-    connectionType: 'Kubernetes Service Connection'
-    kubernetesServiceConnection: 'deploytoProd-needforspeed-speed-1691007302288'
-    namespace: 'speed'
+    connectionType: 'Azure Resource Manager'
+    azureSubscription: 'Subscription 2(9e562a82-805c-49a3-8024-85cc8e02b0cc)'
+    azureResourceGroup: 'arun'
+    kubernetesCluster: 'needforspeed'
+    namespace: 'ar'
     command: 'upgrade'
     chartType: 'FilePath'
-    chartPath: 'Chart.yaml'
-    chartVersion: '1'
+    chartPath: '/home/vsts/work/1/s/f1/Chart.yaml'
+    chartVersion: '1.1'
     releaseName: 'f1'
+    valueFile: 'home/vsts/work/1/s/f1/values.yaml'
 
