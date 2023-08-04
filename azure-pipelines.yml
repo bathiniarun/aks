@@ -74,7 +74,7 @@ stages:
               namespace: 'speed'
               command: 'upgrade'
               chartType: filepath
-              chartPath: '$(System.DefaultWorkingDirectory)//ask-*.tgz'
+              chartPath: '$(System.DefaultWorkingDirectory)//manifests-*.tgz'
               chartVersion: '1.0.0'
               releaseName: 'f1'
               valueFile: 'aks/helm/f1/values.yaml'
