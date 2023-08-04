@@ -75,5 +75,6 @@ stages:
               command: 'upgrade'
               arguments: --set createCustomResources=$(CREATE_CUSTOM_RESOURCE)
               chartType: 'Filepath'
+              chartName: 'Chart.yaml'
               chartVersion: '1.0.0'
               releaseName: 'f1'
