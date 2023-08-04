@@ -73,6 +73,9 @@ stages:
               kubernetesCluster: 'needforspeed'
               namespace: 'speed'
               command: 'upgrade'
+              manifests: |
+                $(Pipeline.Workspace)/manifests/helm/f1/chart.yaml
+                $(Pipeline.Workspace)/manifests/helm/f1/values.yaml
               chartType: 'FilePath'
               chartPath: 'manifests/helm/f1'
               chartVersion: '1'
