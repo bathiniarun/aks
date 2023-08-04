@@ -65,7 +65,7 @@ stages:
               secretName: $(imagePullSecret)
               dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
 
-          - task: HelmDeploy@0
+  - task: HelmDeploy@0
   inputs:
     connectionType: 'Azure Resource Manager'
     azureSubscription: 'Subscription 2(1)(9e562a82-805c-49a3-8024-85cc8e02b0cc)'
