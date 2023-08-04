@@ -75,7 +75,5 @@ stages:
               command: 'upgrade'
               arguments: --set createCustomResources=$(CREATE_CUSTOM_RESOURCE)
               chartType: 'Filepath'
-              chartPath: 'f1'
               chartVersion: '1.0.0'
               releaseName: 'f1'
-              valueFile: 'f1'
