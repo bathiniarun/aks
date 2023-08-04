@@ -75,6 +75,7 @@ stages:
               command: 'upgrade'
               arguments: --set createCustomResources=$(CREATE_CUSTOM_RESOURCE)
               chartType: 'Filepath'
-              chartName: 'Chart.yaml'
+              chartName: '$(Pipeline.workspace)/mainfests/ask.tgz'
               chartVersion: '1.0.0'
               releaseName: 'f1'
+              valueFile: $(Pipeline.workspace)/mainfests/values.yaml
