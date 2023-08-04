@@ -77,5 +77,5 @@ stages:
               chartPath: '$(System.DefaultWorkingDirectory)/f1/Charts.yaml'
               chartVersion: '1.0.0'
               releaseName: 'f1'
-              valueFile: 'aks/helm/f1/values.yaml'
+              valueFile: '$(System.DefaultWorkingDirectory)/f1/values.yaml'
 
