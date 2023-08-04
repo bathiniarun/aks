@@ -74,8 +74,8 @@ stages:
               namespace: 'speed'
               command: 'upgrade'
               chartType: 'FilePath'
-              chartPath: 'helm/f1'
+              chartPath: 'manifests/helm/f1'
               chartVersion: '1'
               releaseName: 'f1'
-              valueFile: 'values.yaml'
+              valueFile: 'manifests/helm/f1'
 
