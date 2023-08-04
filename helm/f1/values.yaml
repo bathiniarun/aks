@@ -8,7 +8,7 @@ image:
   repository: cricketipl.azurecr.io/bathiniarunaks
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1"
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -80,10 +80,6 @@ autoscaling:
 
 nodeSelector: {}
 
-tolerations:
-- key: "haas"
-  operator: "Equal"
-  value: "10"
-  effect: "NoSchedule"
+tolerations: {}
 
 affinity: {}
