@@ -74,7 +74,7 @@ stages:
               namespace: 'speed'
               command: 'upgrade'
               chartType: filepath
-              chartPath: '$(System.DefaultWorkingDirectory)/home/vsts/work/1/s/helm/f1/Charts.yaml'
+              chartPath: '$(System.DefaultWorkingDirectory)/helm/f1/Charts.yaml'
               chartVersion: '1.0.0'
               releaseName: 'f1'
               valueFile: 'aks/helm/f1/values.yaml'
