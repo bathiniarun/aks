@@ -64,21 +64,18 @@ stages:
               action: createSecret
               secretName: $(imagePullSecret)
               dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
-
-  - task: HelmDeploy@0
-  inputs:
-    connectionType: 'Azure Resource Manager'
-    azureSubscription: 'Subscription 2(1)(9e562a82-805c-49a3-8024-85cc8e02b0cc)'
-    azureResourceGroup: 'arun'
-    kubernetesCluster: 'needforspeed'
-    namespace: 'default'
-    command: 'upgrade'
-    chartType: 'Name'
-    chartName: 'helm/f1'
-    chartVersion: '1'
-    releaseName: 'f1'
-    valueFile: 'helm/f1'
-
-    # Add the manifests to the command
-    arguments: '--set-file=manifest=$(Pipeline.Workspace)/helm/f1/Chart.yaml --set-file=values=$(Pipeline.Workspace)/helm/f1/Values.yaml'
+          
+          - task: HelmDeploy@0
+            inputs:
+              connectionType: 'Azure Resource Manager'
+              azureSubscription: 'Subscription 2(1)(9e562a82-805c-49a3-8024-85cc8e02b0cc)'
+              azureResourceGroup: 'arun'
+              kubernetesCluster: 'needforspeed'
+              namespace: 'speed'
+              command: 'upgrade'
+              chartType: 'FilePath'
+              chartPath: 'helm/f1'
+              chartVersion: '1'
+              releaseName: 'f1'
+              valueFile: 'values.yaml'
 
