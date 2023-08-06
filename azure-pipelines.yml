@@ -12,8 +12,8 @@ variables:
 
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'f6d895c0-f931-442f-a16d-8bf284f431f2'
-  imageRepository: 'bathiniarunaks'
-  containerRegistry: 'cricketipl.azurecr.io'
+  imageRepository: 'cskipl.azurecr.io'
+  containerRegistry: '.azurecr.io'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
   imagePullSecret: 'cricketipl78804d27-auth'
