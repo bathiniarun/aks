@@ -68,14 +68,13 @@ stages:
           - task: HelmDeploy@0
             inputs:
               connectionType: 'Azure Resource Manager'
-              azureSubscription: '9e562a82-805c-49a3-8024-85cc8e02b0cc'
+              azureSubscription: 'Subscription 2(1)(9e562a82-805c-49a3-8024-85cc8e02b0cc)'
               azureResourceGroup: 'arun'
-              kubernetesCluster: 'arun-ask-cluster'
+              kubernetesCluster: 'arun-aks-cluster'
               namespace: 'arun'
               command: 'upgrade'
-              arguments: --set createCustomResources=$(CREATE_CUSTOM_RESOURCE)
-              chartType: 'Filepath'
-              chartName: '$(Build.ArtifactStagingDirectory)/helm/f1'
-              chartVersion: '1.0.0'
+              chartType: 'FilePath'
+              chartPath: '$(Build.ArtifactStagingDirectory)/helm/f1'
+              chartVersion: '1.0'
               releaseName: 'f1'
               valueFile: '$(Build.ArtifactStagingDirectory)/helm/f1'
