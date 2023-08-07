@@ -64,6 +64,15 @@ stages:
               action: createSecret
               secretName: $(imagePullSecret)
               dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
+            # Print the current working directory
+          - script: |
+              pwd
+            displayName: Print Current Working Directory
+
+          # List the contents of the current directory
+          - script: |
+              ls -R
+            displayName: List Directory Contents
           
           - task: HelmDeploy@0
             inputs:
